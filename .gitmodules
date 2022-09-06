@@ -1,15 +1,15 @@
 [submodule "api-gateway"]
 	path = api-gateway
-	url = ./api-gateway
+	url = https://github.com/vb1120/discount-api-gateway.git
 [submodule "users-service"]
 	path = users-service
-	url = ./users-service
+	url = https://github.com/vb1120/discount-users-service.git
 [submodule "banners-service"]
 	path = banners-service
-	url = ./banners-service
+	url = https://github.com/vb1120/discount-banners-service.git
 [submodule "profiles-service"]
 	path = profiles-service
-	url = ./profiles-service
+	url = https://github.com/vb1120/discount-profiles-service.git
 [submodule "categories-service"]
 	path = categories-service
-	url = ./categories-service
+	url = https://github.com/vb1120/discount-categories-service.git
