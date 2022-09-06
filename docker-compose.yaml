@@ -10,6 +10,7 @@ services:
         ports:
             - '7070:7070'
         volumes:
+            - /app/node_modules
             - ./api-gateway:/app
     users-service:
         build:
@@ -20,6 +21,7 @@ services:
         ports:
             - '7071:7071'
         volumes:
+            - /app/node_modules
             - ./users-service:/app
     banners-service:
         build:
@@ -30,6 +32,7 @@ services:
         ports:
             - '7072:7072'
         volumes:
+            - /app/node_modules
             - './banners-service:/app'
     categories-service:
         build:
@@ -40,6 +43,7 @@ services:
         ports:
             - '7073:7073'
         volumes:
+            - /app/node_modules
             - './categories-service:/app'
     profiles-service:
         build:
@@ -50,6 +54,7 @@ services:
         ports:
             - '7074:7074'
         volumes:
+            - /app/node_modules
             - './profiles-service:/app'
     users-service-db:
         image: mongo
