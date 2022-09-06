@@ -1,0 +1,15 @@
+[submodule "api-gateway"]
+	path = api-gateway
+	url = ./api-gateway
+[submodule "users-service"]
+	path = users-service
+	url = ./users-service
+[submodule "banners-service"]
+	path = banners-service
+	url = ./banners-service
+[submodule "profiles-service"]
+	path = profiles-service
+	url = ./profiles-service
+[submodule "categories-service"]
+	path = categories-service
+	url = ./categories-service
