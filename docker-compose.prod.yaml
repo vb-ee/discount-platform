@@ -1,0 +1,73 @@
+version: '3.8'
+services:
+    api-gateway:
+        build:
+            context: './api-gateway'
+            dockerfile: 'Dockerfile'
+        env_file:
+            - ./api-gateway/.env
+        depends_on:
+            - users-service
+            - banners-service
+            - categories-service
+            - profiles-service
+        ports:
+            - '80:7070'
+    users-service:
+        build:
+            context: './users-service'
+            dockerfile: 'Dockerfile'
+        env_file:
+            - ./users-service/.env
+        depends_on:
+            - users-service-db
+        ports:
+            - '7071:7071'
+    banners-service:
+        build:
+            context: './banners-service'
+            dockerfile: 'Dockerfile'
+        depends_on:
+            - banners-service-db
+        ports:
+            - '7072:7072'
+    categories-service:
+        build:
+            context: './categories-service'
+            dockerfile: 'Dockerfile'
+        depends_on:
+            - categories-service-db
+        ports:
+            - '7073:7073'
+    profiles-service:
+        build:
+            context: './profiles-service'
+            dockerfile: 'Dockerfile'
+        depends_on:
+            - profiles-service-db
+        ports:
+            - '7074:7074'
+    users-service-db:
+        image: mongo
+        volumes:
+            - ./users-service/data:/data/db
+        ports:
+            - '27018:27017'
+    banners-service-db:
+        image: mongo
+        volumes:
+            - ./banners-service/data:/data/db
+        ports:
+            - '27019:27017'
+    categories-service-db:
+        image: mongo
+        volumes:
+            - ./categories-service/data:/data/db
+        ports:
+            - '27020:27017'
+    profiles-service-db:
+        image: mongo
+        volumes:
+            - ./profiles-service/data:/data/db
+        ports:
+            - '27021:27017'
