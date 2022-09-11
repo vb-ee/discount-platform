@@ -3,58 +3,60 @@ services:
     api-gateway:
         build:
             context: './api-gateway'
-            dockerfile: 'Dockerfile'
+            dockerfile: 'Dockerfile.dev'
+        env_file:
+            - ./api-gateway/.env
         depends_on:
             - users-service
             - banners-service
+            - categories-service
+            - profiles-service
         ports:
             - '7070:7070'
         volumes:
-            - ./api-gateway:/app
+            - ./api-gateway/src:/app/src
     users-service:
         build:
             context: './users-service'
-            dockerfile: 'Dockerfile'
+            dockerfile: 'Dockerfile.dev'
+        env_file:
+            - ./users-service/.env
         depends_on:
             - users-service-db
         ports:
             - '7071:7071'
         volumes:
-            - /app/node_modules/bcrypt
-            - ./users-service:/app
+            - ./users-service/src:/app/src
     banners-service:
         build:
             context: './banners-service'
-            dockerfile: 'Dockerfile'
+            dockerfile: 'Dockerfile.dev'
         depends_on:
             - banners-service-db
         ports:
             - '7072:7072'
         volumes:
-            - /app/images
-            - './banners-service:/app'
+            - './banners-service/src:/app/src'
     categories-service:
         build:
             context: './categories-service'
-            dockerfile: 'Dockerfile'
+            dockerfile: 'Dockerfile.dev'
         depends_on:
             - categories-service-db
         ports:
             - '7073:7073'
         volumes:
-            - /app/images
-            - './categories-service:/app'
+            - './categories-service/src:/app/src'
     profiles-service:
         build:
             context: './profiles-service'
-            dockerfile: 'Dockerfile'
+            dockerfile: 'Dockerfile.dev'
         depends_on:
             - profiles-service-db
         ports:
             - '7074:7074'
         volumes:
-            - /app/images
-            - './profiles-service:/app'
+            - './profiles-service/src:/app/src'
     users-service-db:
         image: mongo
         volumes:
