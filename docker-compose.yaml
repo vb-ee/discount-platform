@@ -11,6 +11,8 @@ services:
             - banners-service
             - categories-service
             - profiles-service
+            - sections-service
+            - discounts-service
         ports:
             - '7070:7070'
         volumes:
@@ -57,6 +59,26 @@ services:
             - '7074:7074'
         volumes:
             - './profiles-service/src:/app/src'
+    sections-service:
+        build:
+            context: './sections-service'
+            dockerfile: 'Dockerfile.dev'
+        depends_on:
+            - sections-service-db
+        ports:
+            - '7075:7075'
+        volumes:
+            - './sections-service/src:/app/src'
+    discounts-service:
+        build:
+            context: './discounts-service'
+            dockerfile: 'Dockerfile.dev'
+        depends_on:
+            - discounts-service-db
+        ports:
+            - '7076:7076'
+        volumes:
+            - './discounts-service/src:/app/src'
     users-service-db:
         image: mongo
         volumes:
@@ -81,3 +103,15 @@ services:
             - ./profiles-service/data:/data/db
         ports:
             - '27021:27017'
+    sections-service-db:
+        image: mongo
+        volumes:
+            - ./sections-service/data:/data/db
+        ports:
+            - '27022:27017'
+    discounts-service-db:
+        image: mongo
+        volumes:
+            - ./discounts-service/data:/data/db
+        ports:
+            - '27023:27017'
