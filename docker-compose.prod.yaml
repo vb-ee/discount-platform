@@ -27,65 +27,63 @@ services:
         build:
             context: './banners-service'
             dockerfile: 'Dockerfile'
+        env_file:
+            - ./banners-service/.env
         depends_on:
             - banners-service-db
     categories-service:
         build:
             context: './categories-service'
             dockerfile: 'Dockerfile'
+        env_file:
+            - ./categories-service/.env
         depends_on:
             - categories-service-db
     profiles-service:
         build:
             context: './profiles-service'
             dockerfile: 'Dockerfile'
+        env_file:
+            - ./profiles-service/.env
         depends_on:
             - profiles-service-db
     sections-service:
         build:
             context: './sections-service'
             dockerfile: 'Dockerfile'
+        env_file:
+            - ./sections-service/.env
         depends_on:
             - sections-service-db
     discounts-service:
         build:
             context: './discounts-service'
             dockerfile: 'Dockerfile'
+        env_file:
+            - ./discounts-service/.env
         depends_on:
             - discounts-service-db
     users-service-db:
         image: mongo
-        volumes:
-            - ./users-service/data:/data/db
         ports:
             - '27018:27017'
     banners-service-db:
         image: mongo
-        volumes:
-            - ./banners-service/data:/data/db
         ports:
             - '27019:27017'
     categories-service-db:
         image: mongo
-        volumes:
-            - ./categories-service/data:/data/db
         ports:
             - '27020:27017'
     profiles-service-db:
         image: mongo
-        volumes:
-            - ./profiles-service/data:/data/db
         ports:
             - '27021:27017'
     sections-service-db:
         image: mongo
-        volumes:
-            - ./sections-service/data:/data/db
         ports:
             - '27022:27017'
     discounts-service-db:
         image: mongo
-        volumes:
-            - ./discounts-service/data:/data/db
         ports:
             - '27023:27017'

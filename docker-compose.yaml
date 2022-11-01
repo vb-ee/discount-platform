@@ -17,6 +17,8 @@ services:
             - '8080:8080'
         volumes:
             - ./api-gateway/src:/app/src
+            - ./api-gateway/package.json:/app/package.json
+            - ./api-gateway/tsconfig.json:/app/tsconfig.json
     users-service:
         build:
             context: './users-service'
@@ -25,93 +27,110 @@ services:
             - ./users-service/.env
         depends_on:
             - users-service-db
+            - test-db
         ports:
             - '8081:8080'
         volumes:
             - ./users-service/src:/app/src
+            - ./users-service/tests:/app/tests
+            - ./users-service/package.json:/app/package.json
+            - ./users-service/tsconfig.json:/app/tsconfig.json
+            - ./users-service/jest.config.js:/app/jest.config.js
     banners-service:
         build:
             context: './banners-service'
             dockerfile: 'Dockerfile.dev'
+        env_file:
+            - ./banners-service/.env
         depends_on:
             - banners-service-db
         ports:
             - '8082:8080'
         volumes:
-            - './banners-service/src:/app/src'
+            - ./banners-service/src:/app/src
+            - ./banners-service/package.json:/app/package.json
+            - ./banners-service/tsconfig.json:/app/tsconfig.json
     categories-service:
         build:
             context: './categories-service'
             dockerfile: 'Dockerfile.dev'
+        env_file:
+            - ./categories-service/.env
         depends_on:
             - categories-service-db
         ports:
             - '8083:8080'
         volumes:
-            - './categories-service/src:/app/src'
+            - ./categories-service/src:/app/src
+            - ./categories-service/package.json:/app/package.json
+            - ./categories-service/tsconfig.json:/app/tsconfig.json
     profiles-service:
         build:
             context: './profiles-service'
             dockerfile: 'Dockerfile.dev'
+        env_file:
+            - ./profiles-service/.env
         depends_on:
             - profiles-service-db
         ports:
             - '8084:8080'
         volumes:
-            - './profiles-service/src:/app/src'
+            - ./profiles-service/src:/app/src
+            - ./profiles-service/package.json:/app/package.json
+            - ./profiles-service/tsconfig.json:/app/tsconfig.json
     sections-service:
         build:
             context: './sections-service'
             dockerfile: 'Dockerfile.dev'
+        env_file:
+            - ./sections-service/.env
         depends_on:
             - sections-service-db
         ports:
             - '8085:8080'
         volumes:
-            - './sections-service/src:/app/src'
+            - ./sections-service/src:/app/src
+            - ./sections-service/package.json:/app/package.json
+            - ./sections-service/tsconfig.json:/app/tsconfig.json
     discounts-service:
         build:
             context: './discounts-service'
             dockerfile: 'Dockerfile.dev'
+        env_file:
+            - ./discounts-service/.env
         depends_on:
             - discounts-service-db
         ports:
             - '8086:8080'
         volumes:
-            - './discounts-service/src:/app/src'
+            - ./discounts-service/src:/app/src
+            - ./discounts-service/package.json:/app/package.json
+            - ./discounts-service/tsconfig.json:/app/tsconfig.json
     users-service-db:
         image: mongo
-        volumes:
-            - ./users-service/data:/data/db
         ports:
             - '27018:27017'
     banners-service-db:
         image: mongo
-        volumes:
-            - ./banners-service/data:/data/db
         ports:
             - '27019:27017'
     categories-service-db:
         image: mongo
-        volumes:
-            - ./categories-service/data:/data/db
         ports:
             - '27020:27017'
     profiles-service-db:
         image: mongo
-        volumes:
-            - ./profiles-service/data:/data/db
         ports:
             - '27021:27017'
     sections-service-db:
         image: mongo
-        volumes:
-            - ./sections-service/data:/data/db
         ports:
             - '27022:27017'
     discounts-service-db:
         image: mongo
-        volumes:
-            - ./discounts-service/data:/data/db
         ports:
             - '27023:27017'
+    test-db:
+        image: mongo
+        ports:
+            - '27024:27017'
