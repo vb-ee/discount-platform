@@ -10,12 +10,6 @@
 [submodule "profiles-service"]
 	path = profiles-service
 	url = git@github.com:vb1120/discount-profiles-service.git
-[submodule "categories-service"]
-	path = categories-service
-	url = git@github.com:vb1120/discount-categories-service.git
 [submodule "discounts-service"]
 	path = discounts-service
 	url = git@github.com:vb1120/discount-discounts-service.git
-[submodule "sections-service"]
-	path = sections-service
-	url = git@github.com:vb1120/discount-sections-service.git
