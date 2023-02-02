@@ -9,10 +9,10 @@ services:
         depends_on:
             - users-service
             - banners-service
-            - categories-service
+            - image-delivery-service
             - profiles-service
-            - sections-service
             - discounts-service
+            - rabbitmq
         ports:
             - '80:8080'
     users-service:
@@ -23,6 +23,7 @@ services:
             - ./users-service/.env
         depends_on:
             - users-service-db
+            - rabbitmq
     banners-service:
         build:
             context: './banners-service'
@@ -31,14 +32,8 @@ services:
             - ./banners-service/.env
         depends_on:
             - banners-service-db
-    categories-service:
-        build:
-            context: './categories-service'
-            dockerfile: 'Dockerfile'
-        env_file:
-            - ./categories-service/.env
-        depends_on:
-            - categories-service-db
+            - image-delivery-service
+            - rabbitmq
     profiles-service:
         build:
             context: './profiles-service'
@@ -47,14 +42,9 @@ services:
             - ./profiles-service/.env
         depends_on:
             - profiles-service-db
-    sections-service:
-        build:
-            context: './sections-service'
-            dockerfile: 'Dockerfile'
-        env_file:
-            - ./sections-service/.env
-        depends_on:
-            - sections-service-db
+            - image-delivery-service
+            - rabbitmq
+        command: sh -c '/bin/wait-for-it.sh rabbitmq:5672 --timeout=60 -- npm run start'
     discounts-service:
         build:
             context: './discounts-service'
@@ -63,27 +53,43 @@ services:
             - ./discounts-service/.env
         depends_on:
             - discounts-service-db
+            - image-delivery-service
+            - rabbitmq
+    image-delivery-service:
+        build:
+            context: './image-delivery-service'
+            dockerfile: 'Dockerfile.dev'
+        depends_on:
+            - rabbitmq
+        ports:
+            - '8085:8080'
     users-service-db:
         image: mongo
         ports:
             - '27018:27017'
+        volumes:
+            - ./users-service/db:/data/db
     banners-service-db:
         image: mongo
         ports:
             - '27019:27017'
-    categories-service-db:
-        image: mongo
-        ports:
-            - '27020:27017'
+        volumes:
+            - ./banners-service/db:/data/db
     profiles-service-db:
         image: mongo
         ports:
-            - '27021:27017'
-    sections-service-db:
-        image: mongo
-        ports:
-            - '27022:27017'
+            - '27020:27017'
+        volumes:
+            - ./profiles-service/db:/data/db
     discounts-service-db:
         image: mongo
         ports:
-            - '27023:27017'
+            - '27021:27017'
+        volumes:
+            - ./discounts-service/db:/data/db
+    rabbitmq:
+        image: rabbitmq:3.11-management-alpine
+        container_name: 'rabbitmq'
+        ports:
+            - '5672:5672'
+            - '15672:15672'
