@@ -13,12 +13,12 @@
 [submodule "discounts-service"]
 	path = discounts-service
 	url = git@github.com:vb1120/discount-discounts-service.git
-[submodule "static-content"]
-	path = static-content
-	url = ./static-content
 [submodule "image-delivery-service"]
 	path = image-delivery-service
 	url = git@github.com:vb1120/discount-image-delivery-service.git
 [submodule "common"]
 	path = common
 	url = git@github.com:vb1120/payhasly-discount-common.git
+[submodule "favorites-service"]
+	path = favorites-service
+	url = git@github.com:vb1120/discount-favorites-service.git
