@@ -12,6 +12,7 @@ services:
             - image-delivery-service
             - profiles-service
             - discounts-service
+            - favorites-service
             - rabbitmq
         ports:
             - '80:8080'
@@ -55,14 +56,29 @@ services:
             - discounts-service-db
             - image-delivery-service
             - rabbitmq
-    image-delivery-service:
+    favorites-service:
         build:
-            context: './image-delivery-service'
-            dockerfile: 'Dockerfile.dev'
+            context: './favorites-service'
+            dockerfile: 'Dockerfile'
+        env_file:
+            - ./favorites-service/.env
         depends_on:
+            - favorites-service-db
+            - image-delivery-service
             - rabbitmq
         ports:
             - '8085:8080'
+        volumes:
+            - ./favorites-service/src:/app/src
+        command: sh -c '/bin/wait-for-it.sh rabbitmq:5672 --timeout=60 -- npm run start'
+    image-delivery-service:
+        build:
+            context: './image-delivery-service'
+            dockerfile: 'Dockerfile'
+        depends_on:
+            - rabbitmq
+        ports:
+            - '8086:8080'
     users-service-db:
         image: mongo
         ports:
@@ -87,6 +103,12 @@ services:
             - '27021:27017'
         volumes:
             - ./discounts-service/db:/data/db
+    favorites-service-db:
+        image: mongo
+        ports:
+            - '27022:27017'
+        volumes:
+            - ./favorites-service/db:/data/db
     rabbitmq:
         image: rabbitmq:3.11-management-alpine
         container_name: 'rabbitmq'
