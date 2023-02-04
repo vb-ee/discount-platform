@@ -79,6 +79,8 @@ services:
             - rabbitmq
         ports:
             - '8086:8080'
+        volumes:
+            - ./image-delivery-service/images:/app/images
     users-service-db:
         image: mongo
         ports:
