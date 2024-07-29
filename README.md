@@ -18,6 +18,8 @@ The project is build to master Typescript, Docker and understand the concept of 
 
 6. **User Service**: This service handles authentication logic for users and provides CRUD operations.
 
+7. **Favorite Service**: This service is responsible for storing and managing items tagged as favorites for users.
+
 ## Tech Stack
 
 The Discounting Platform project utilizes the following technologies:
